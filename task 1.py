@@ -72,12 +72,14 @@ class Auditorium:
         """
         if not isinstance(number_of_seats, int):
             raise TypeError('Количество мест должно быть типа int')
+        if number_of_seats < 0:
+            raise ValueError('Количество мест должно быть положительным числом')
         self.number_of_seats = number_of_seats
 
         if not isinstance(number_of_students, int):
             raise TypeError('Количество студентов должно быть типа int')
-        if number_of_students > number_of_seats:
-            raise ValueError('Количество студентов не должно быть больше количества сидящих мест')
+        if not 0 < number_of_students < number_of_seats:
+            raise ValueError('Количество студентов не должно быть больше количества сидящих мест, а также не должно быть меньше 0')
         self.number_of_students = number_of_students
 
     def empty_class(self) -> bool:
@@ -100,7 +102,7 @@ class Auditorium:
 
         Примеры:
         >>> auditorium = Auditorium(30, 20)
-        >>> auditorium.empty_class()
+        >>> auditorium.number_of_available_seats()
         """
         ...
 
@@ -154,11 +156,10 @@ class Exam:
         """
         if isinstance(attendance, int):
             raise TypeError('Посещаемость должна быть типа int')
-        if 0 < attendance < 100:
+        if not 0 < attendance < 100:
             raise ValueError('Посещаемость должна быть положительным числом и не превышать 100 процентов')
         ...
 
 
 if __name__ == "__main__":
     doctest.testmod()  # тестирование примеров, которые находятся в документации
-
